@@ -3,8 +3,8 @@
 Sources:
 https://developers.google.com/youtube/iframe_api_reference?hl=pt-br
 https://codippa.com/how-to-get-url-parameters-in-javascript/
+--!>
 
-!>
 <html>
   <body>
     <!-- 1. The <iframe> (and video player) will replace this <div> tag. -->
@@ -18,9 +18,6 @@ https://codippa.com/how-to-get-url-parameters-in-javascript/
       var firstScriptTag = document.getElementsByTagName('script')[0];
       firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 
-	  console.log("Página carregando...");
-
-	  
       // 3. This function creates an <iframe> (and YouTube player)
       //    after the API code downloads.
       var player;
@@ -54,8 +51,7 @@ https://codippa.com/how-to-get-url-parameters-in-javascript/
 
       var estado_ant = -2;
 	function onPlayerStateChange(event) {
-
-		if (event.data == YT.PlayerState.ENDED && estado_ant == YT.PlayerState.PLAYING /*&& !done*/) 
+		if (event.data == YT.PlayerState.ENDED && estado_ant == YT.PlayerState.PLAYING) 
 		{
 			if (parametros.hasOwnProperty("id"+contador))
 			{
