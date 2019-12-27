@@ -1,4 +1,10 @@
 <!DOCTYPE html>
+<!--
+Sources:
+https://developers.google.com/youtube/iframe_api_reference?hl=pt-br
+https://codippa.com/how-to-get-url-parameters-in-javascript/
+
+!>
 <html>
   <body>
     <!-- 1. The <iframe> (and video player) will replace this <div> tag. -->
@@ -22,42 +28,35 @@
 	  var contador = 0;
       function onYouTubeIframeAPIReady() {
         
-		player = new YT.Player('player', {
+	player = new YT.Player('player', {
           events: {
             'onReady': onPlayerReady,
             'onStateChange': onPlayerStateChange
           }
         });
 		
-		parametros = getQueryParams();
-		console.log(parametros);
-		
+	parametros = getQueryParams();
       }
 
       // 4. The API will call this function when the video player is ready.
       function onPlayerReady(event) {
-		id = parametros['id0'];
-		start = parametros['start0'];
-		end = parametros['end0'];
-		contador++;
+	id = parametros['id0'];
+	start = parametros['start0'];
+	end = parametros['end0'];
+	contador++;
 
-		var y = {};
-		y.videoId = id;
-		y.startSeconds = start;
-		y.endSeconds = end;
-		event.target.loadVideoById(y);
-		console.log("Comandou "+(contador-1));
+	var y = {};
+	y.videoId = id;
+	y.startSeconds = start;
+	y.endSeconds = end;
+	event.target.loadVideoById(y);
       }
 
       var estado_ant = -2;
-	  function onPlayerStateChange(event) {
-		//static int estado_ant = -2;
-		
-		console.log(event.data);
-		
+	function onPlayerStateChange(event) {
+
 		if (event.data == YT.PlayerState.ENDED && estado_ant == YT.PlayerState.PLAYING /*&& !done*/) 
 		{
-			console.log("EVENTO FIM");
 			if (parametros.hasOwnProperty("id"+contador))
 			{
 				id = parametros['id'+contador];
@@ -66,17 +65,12 @@
 				contador++;
 
 				event.target.loadVideoById({
-				  videoId: id,
-				  startSeconds: start,
-				  endSeconds: end
+					videoId: id,
+					startSeconds: start,
+					endSeconds: end
 				});
-				console.log("Comandou "+(contador-1));
 			}
-			else
-			{
-				Console.log("Cabô!!!");
-			}
-        }
+		}
 		else
 		{
 			estado_ant = event.data;
@@ -98,7 +92,6 @@
 		var item = queryParam.split("=");
 		result[item[0]] = decodeURIComponent(item[1]);
 	  });
-	  // return result object
 	  return result;
 	}	  
 
